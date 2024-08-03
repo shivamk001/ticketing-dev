@@ -1,5 +1,7 @@
 import express, {Response, Request} from 'express';
 import { body, validationResult } from 'express-validator';
+import { RequestValidationError } from '../middleware/errors/request-validation-error';
+import { DatabaseConnectionError } from '../middleware/errors/database-connection-error';
 
 let router = express.Router();
 
@@ -10,8 +12,11 @@ router.post('/auth/users/signup',     [
     (req: Request, res: Response)=>{
         const error=validationResult(req);
         if(!error.isEmpty())
-            return res.status(400).send(error.array())
-        res.send('Hello there!');
+            throw new RequestValidationError(error.array());
+
+        console.log('Creating a user...');
+        throw new DatabaseConnectionError();
+        res.send({});
 })
 
 export { router as signUpRouter};
