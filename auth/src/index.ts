@@ -19,6 +19,9 @@ app.use(cookieSession({
     signed: false,
     secure: true
 }))
+app.all('/uptime', (req, res)=>{
+    res.send('Hello World!')
+})
 app.use(currentUserRouter);
 app.use(signInRouter);
 app.use(signOutRouter);
@@ -31,6 +34,9 @@ app.use(errorHandler);
 
 // CONNECT WITH MONGODB
 const start = async ()=>{
+    if(!process.env.JWT_KEY){
+        throw new Error('JWT_KEY is undefined');
+    }
     try{
         await mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
     }
