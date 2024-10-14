@@ -1,6 +1,7 @@
 import express, {Response, Request} from 'express';
 import { body, validationResult } from 'express-validator';
 import { RequestValidationError } from '../middleware/errors/request-validation-error';
+import { validationRequest } from '../middleware/validate-request';
 
 let router = express.Router();
 
@@ -14,6 +15,7 @@ router.post('/auth/users/signin',
             .notEmpty()
             .withMessage('You must supply a password')
     ],
+    validationRequest,
     (req: Request, res: Response)=>{
         const errors=validationResult(req);
 

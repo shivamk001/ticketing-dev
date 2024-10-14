@@ -5,6 +5,7 @@ import { RequestValidationError } from '../middleware/errors/request-validation-
 import { DatabaseConnectionError } from '../middleware/errors/database-connection-error';
 import { BadRequestError } from '../middleware/errors/bad-request-error';
 import { User } from '../models/user';
+import { validationRequest } from '../middleware/validate-request';
 
 let router = express.Router();
 
@@ -12,6 +13,7 @@ router.post('/auth/users/signup',     [
     body('email').isEmail().withMessage('Email must be valid'),
     body('password').trim().isLength({min: 4, max: 20}).withMessage('Password must be min 4 max 20')
     ], 
+    validationRequest,
     async (req: Request, res: Response)=>{
         const error=validationResult(req);
         if(!error.isEmpty())
