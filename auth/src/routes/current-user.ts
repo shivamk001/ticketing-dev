@@ -1,6 +1,4 @@
 import express, {Response, Request} from 'express';
-import { body, validationResult } from 'express-validator';
-import jwt from 'jsonwebtoken';
 import { currentUser } from '../middleware/current-user';
 
 let router = express.Router();
