@@ -8,9 +8,9 @@
   },
   "jest":{
     "preset": "ts-jest",
-    "testEnvironment": [
-      "./src/test/setup.ts"
-    ]
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": ["./src/test/setup.ts"]
+    
   },
   "keywords": [],
   "author": "",

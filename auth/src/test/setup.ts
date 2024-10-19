@@ -5,10 +5,11 @@ import { app } from '../app';
 let mongo: any;
 // connect with mongodb memory server
 beforeAll(async ()=>{
+    process.env.JWT_KEY='asdf';
     mongo=await MongoMemoryServer.create();
     const mongoUri=mongo.getUri();
     await mongoose.connect(mongoUri, {})
-})
+});
 
 // delete all data between each test
 beforeEach(async ()=>{
@@ -21,7 +22,7 @@ beforeEach(async ()=>{
             await collection.deleteMany({});
         }
     }
-})
+});
 
 // stop server and disconnect
 afterAll(async ()=>{
@@ -30,4 +31,4 @@ afterAll(async ()=>{
     }
     // disconnect
     await mongoose.connection.close();
-})
+});

@@ -16,6 +16,7 @@ router.post('/auth/users/signup',     [
     validationRequest,
     async (req: Request, res: Response)=>{
         const error=validationResult(req);
+        console.log(error.array());
         if(!error.isEmpty())
             throw new RequestValidationError(error.array());
 
