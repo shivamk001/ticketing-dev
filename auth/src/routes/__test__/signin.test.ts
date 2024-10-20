@@ -3,12 +3,12 @@ import { app } from '../../app';
 
 it('fails when an email that doesnt exist is supplied', async ()=>{
     return request(app)
-            .post('/auth/users/sign')
+            .post('/auth/users/signin')
             .send({
                 email: 'test@test.com',
                 password: 'password'
             })
-            .expect(404);
+            .expect(400);
 });
 
 it('fails when an incorrect password is supplied', async ()=>{
