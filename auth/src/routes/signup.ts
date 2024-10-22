@@ -16,15 +16,15 @@ router.post('/auth/users/signup',     [
     validationRequest,
     async (req: Request, res: Response)=>{
         const error=validationResult(req);
-        if(!error.isEmpty())
-            throw new RequestValidationError(error.array());
 
-        console.log('Creating a user...');
+        if(!error.isEmpty()){
+            throw new RequestValidationError(error.array());
+        }
+
         const { email, password }=req.body;
         const existingUser=await User.findOne({email});
 
         if(existingUser){
-            console.log('Email in use!');
             throw new BadRequestError('Email in use'); 
         }
 

@@ -25,12 +25,12 @@ router.post('/auth/users/signin',
         const { email, password } = req.body;
 
         const existingUser = await User.findOne({email});
-         if(!existingUser){
+        if(!existingUser){
             throw new BadRequestError('Invalid Credentials');
         }
 
-        const passwordsMatch=Password.compare(existingUser.password, password);
-
+        const passwordsMatch=await Password.compare(existingUser.password, password);
+        
         if(!passwordsMatch){
             throw new BadRequestError('Invalid Credentials');
         }
