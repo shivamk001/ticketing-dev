@@ -1,6 +1,11 @@
 import buildClient from "../api/buildClient"
-const landingPage=({ color })=>{
-    return <h1>Landing Page {color}</h1>
+const landingPage=({ currentUser })=>{
+    return currentUser?(
+        <h1>You are signed in</h1>
+    ):
+    (
+        <h1>You are NOT signed in</h1>
+    )
 }
 
 landingPage.getInitialProps=async (context)=>{
