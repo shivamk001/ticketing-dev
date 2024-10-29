@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from 'axios';
+import Router from 'next/router';
 import useRequest from '../../hooks/useRequest';
 
 const signupForm=()=>{
@@ -8,7 +8,8 @@ const signupForm=()=>{
     const { doRequest, errors}=useRequest({
         url: '/auth/users/signup',
         method: 'POST',
-        body: {email, password}
+        body: {email, password},
+        onSuccess: ()=>Router.push('/')
     })
     const onSubmit=(event)=>{
         event.preventDefault();
