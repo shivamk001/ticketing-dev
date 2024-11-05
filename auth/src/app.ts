@@ -8,8 +8,7 @@ import { currentUserRouter } from './routes/current-user';
 import { signInRouter } from './routes/signin';
 import { signOutRouter } from './routes/signout';
 import { signUpRouter } from './routes/signup';
-import { errorHandler } from './middleware/error-handler';
-import { NotFoundError } from './middleware/errors/not-found-error';
+import { errorHandler, NotFoundError } from '@shivamkesarwani001/ticketing_common';
 
 const app = express();
 // traffic is being proxied to our app through ingress/nginx
