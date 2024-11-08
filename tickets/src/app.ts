@@ -2,7 +2,7 @@ import express from 'express';
 import json from 'body-parser';
 import 'express-async-errors'
 import cookieSession from 'cookie-session';
-import { errorHandler, NotFoundError } from '@shivamkesarwani001/ticketing_common';
+import { errorHandler, NotFoundError, currentUser } from '@shivamkesarwani001/ticketing_common';
 
 import { createTicketRouter } from './routes/new';
 
@@ -17,6 +17,8 @@ app.use(cookieSession({
 app.all('/uptime', (req, res)=>{
     res.send('Hello World!')
 })
+
+app.use(currentUser);
 
 app.use(createTicketRouter);
 

@@ -9,7 +9,20 @@ it('has a router handler listening to /api/tickets', async ()=>{
     expect(response.status).not.toEqual(404);
 });
 
-it('can only be accessed if the user is signed in', async ()=>{});
+it('can only be accessed if the user is signed in', async ()=>{
+    await request(app)
+            .post('/api/tickets')
+            .send({})
+            .expect(401);
+});
+
+it('can only be accessed if the user is signed in', async ()=>{
+    const response=await request(app)
+            .post('/api/tickets')
+            .send({});
+
+    expect(response.status).not.toEqual(401);
+});
 
 it('returns an error if an invalid titled is provided', async ()=>{});
 
