@@ -2,6 +2,8 @@ import express, {Request, Response} from 'express';
 import { body } from 'express-validator';
 import { requireAuth, validationRequest } from '@shivamkesarwani001/ticketing_common';
 
+import { Ticket } from '../models/ticket';
+
 const router=express.Router();
 
 router.post('/api/tickets', requireAuth, 
@@ -15,8 +17,18 @@ router.post('/api/tickets', requireAuth,
         .withMessage('Price must be greater than 0')
     ],
     validationRequest,
-    (req: Request, res: Response)=>{
-        res.sendStatus(200);
+    async (req: Request, res: Response)=>{
+        const {title, price}=req.body;
+
+        const ticket=Ticket.build({
+            title, 
+            price,
+            userId: req.currentUser!.id
+        })
+
+        await ticket.save();
+
+        res.status(201).send(ticket);
 })
 
 export { router as createTicketRouter};
