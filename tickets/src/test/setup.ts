@@ -40,7 +40,7 @@ afterAll(async ()=>{
     await mongoose.connection.close();
 });
 
-global.signin=async()=>{
+global.signin=()=>{
     // build a jwt payload, {id, email}
     const payload={
         id: 'abcde',
