@@ -18,8 +18,32 @@ it('can only be accessed if the user is signed in', async ()=>{
     expect(response.status).not.toEqual(401);
 });
 
-it('returns an error if an invalid titled is provided', async ()=>{});
+it('returns an error if an invalid titled is provided', async ()=>{
+    await request(app)
+            .post('/api/tickets')
+            .set('Cookie', global.signin())
+            .send({title: '', print: 10})
+            .expect(400)
+    
+    await request(app)
+            .post('/api/tickets')
+            .set('Cookie', global.signin())
+            .send({print: 10})
+            .expect(400)
+});
 
-it('returns an error if an invalid price is provided', async ()=>{});
+it('returns an error if an invalid price is provided', async ()=>{
+    await request(app)
+            .post('/api/tickets')
+            .set('Cookie', global.signin())
+            .send({title: 'advsjnvds', print: -10})
+            .expect(400);
+
+    await request(app)
+            .post('/api/tickets')
+            .set('Cookie', global.signin())
+            .send({title: 'advsjnvds'})
+            .expect(400);
+});
 
 it('create a ticket with valid inputs', async ()=>{});
