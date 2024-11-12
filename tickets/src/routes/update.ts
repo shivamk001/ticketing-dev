@@ -16,7 +16,7 @@ router.put('/api/tickets/:id',
     if(!ticket)
             throw new NotFoundError();
 
-    if(!ticket.userId !== req.currentUser?.id)
+    if(ticket.userId !== req.currentUser?.id)
             throw new NotAuthorizedError()
     
     res.send(ticket);
