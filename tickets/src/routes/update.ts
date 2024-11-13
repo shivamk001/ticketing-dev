@@ -36,3 +36,5 @@ router.put('/api/tickets/:id',
 
         res.send(ticket);
 })
+
+export { router as updateTicketRouter };

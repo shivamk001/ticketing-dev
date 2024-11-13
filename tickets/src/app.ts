@@ -7,6 +7,7 @@ import { errorHandler, NotFoundError, currentUser } from '@shivamkesarwani001/ti
 import { createTicketRouter } from './routes/new';
 import { showTicketROuter } from './routes/show';
 import { indexTicketRouter } from './routes';
+import { updateTicketRouter } from './routes/update';
 
 const app = express();
 // traffic is being proxied to our app through ingress/nginx
@@ -25,6 +26,7 @@ app.use(currentUser);
 app.use(createTicketRouter);
 app.use(showTicketROuter);
 app.use(indexTicketRouter);
+app.use(updateTicketRouter);
 
 app.all('*', async (req, res, next)=>{
     next(new NotFoundError());

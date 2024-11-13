@@ -65,13 +65,12 @@ it('updates the tickets provided valid input',
 
                 await request(app)
                         .put(`/api/tickets/${response.body.id}`)
-                        .set('Cookie', global.signin())
+                        .set('Cookie', cookie)
                         .send({title: 'new title', price: 200})
                         .expect(200);
                 
                 const ticketResponse=await request(app)
-                        .put(`/api/tickets/${response.body.id}`)
-                        .set('Cookie', global.signin())
+                        .get(`/api/tickets/${response.body.id}`)
                         .expect(200);
 
                 expect(ticketResponse.body.title).toEqual('new title');
