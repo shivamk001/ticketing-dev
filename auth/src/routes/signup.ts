@@ -1,11 +1,9 @@
 import express, {Response, Request} from 'express';
 import { body, validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
-import { RequestValidationError } from '../middleware/errors/request-validation-error';
-import { DatabaseConnectionError } from '../middleware/errors/database-connection-error';
-import { BadRequestError } from '../middleware/errors/bad-request-error';
+import { RequestValidationError, BadRequestError, validationRequest, DatabaseConnectionError} from '@shivamkesarwani001/ticketing_common';
+
 import { User } from '../models/user';
-import { validationRequest } from '../middleware/validate-request';
 
 let router = express.Router();
 
