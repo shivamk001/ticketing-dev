@@ -7,12 +7,17 @@ const useRequest = ({url, method, body, onSuccess})=>{
     const doRequest=async ()=>{
         try{
             setErrors(null);
-            const response=await axios[method](url, body);
+            let response;
+            if(method=='POST')
+                response=await axios.post(url, body);
+            else
+                response=await axios.get(url, body);
 
             if(onSuccess)   onSuccess(response.data);
             return response.data;
         }
         catch(err){
+            console.log('ERROR:', err);
             setErrors((
                 <div className="alert alert-danger">
                     <h4>Oops....</h4>
