@@ -7,6 +7,9 @@ const stan=nats.connect('ticketing', 'abc', {
 stan.on('connect', ()=>{
     console.log('Listener connected to NATS');
 
+    const options=stan.subscriptionOptions()
+                        .setManualAckMode(true);
+
     const subscription=stan.subscribe('ticket:created', 'orders-service-queue-group');
 
     subscription.on('message', (msg: Message)=>{
@@ -17,5 +20,7 @@ stan.on('connect', ()=>{
             console.log(`Received event #${msg.getSequence()} with data: ${data}`);
         }
         console.log('Message Received');
+
+        msg.ack();
     })
 })
