@@ -4,10 +4,10 @@ import { TicketCreatedEvent } from './ticket-created-event';
 import { Subjects } from "./subjects";
 
 export class TicketCreatedListener extends Listener<TicketCreatedEvent>{
-    subject: Subjects.TicketCreated=Subjects.TicketCreated;
+    readonly subject: TicketCreatedEvent['subject']=Subjects.TicketCreated;
     queueGroupName: string='payments-service';
 
-    onMessage(data: any, msg: Message): void {
+    onMessage(data: TicketCreatedEvent['data'], msg: Message): void {
         console.log('Event Data!', data);
         msg.ack();
     }
