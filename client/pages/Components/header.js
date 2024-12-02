@@ -9,7 +9,7 @@ const Header=({currentUser})=>{
     .filter(linkConfig=> linkConfig)
     .map(({label, href})=>{
         return (<li key={href} className='nav-item'>
-            <Link href={href}>
+            <Link href={href} legacyBehavior>
                 <a className='nav-link'>
                     {label}
                 </a>
@@ -17,13 +17,13 @@ const Header=({currentUser})=>{
         </li>)
     })
     return (<nav className='navbar navbar-light bg-light'>
-        <Link href='/'>
+        <Link href='/' legacyBehavior>
             <a className='navbar-brand'>GitTik</a>
         </Link>
 
         <div className='d-flex justify-content-end'>
             <ul className='nav d-flex align-items-center'>
-                {currentUser ? 'Sign Out':'Sign In/Up'}
+                {links}
             </ul>
         </div>
     </nav>)
