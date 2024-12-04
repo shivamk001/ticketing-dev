@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 import {app} from './app';
+import { natsWrapper } from './nats-wrapper';
 
 // CONNECT WITH MONGODB
 const start = async ()=>{
@@ -11,6 +12,16 @@ const start = async ()=>{
         throw new Error('MONGO_URL is undefined');
     }
     try{
+        await natsWrapper.connect('ticketing', 'laskjf', 'http://nats-srv:4222');
+
+        natsWrapper.client.on('close',()=>{
+            console.log('NATS connection closed!');
+            process.exit();;
+        })
+
+        process.on('SIGINT', ()=>natsWrapper.client.close());
+        process.on('SIGINT', ()=>natsWrapper.client.close());
+
         await mongoose.connect(process.env.MONGO_URI);
     }
     catch(err){
