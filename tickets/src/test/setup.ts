@@ -20,6 +20,7 @@ beforeAll(async ()=>{
 
 // delete all data between each test
 beforeEach(async ()=>{
+    jest.clearAllMocks();
     if(mongoose.connection.db){
         // get all collections
         const collections=await mongoose.connection.db.collections()
