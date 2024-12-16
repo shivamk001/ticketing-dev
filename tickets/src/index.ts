@@ -11,8 +11,21 @@ const start = async ()=>{
     if(!process.env.MONGO_URI){
         throw new Error('MONGO_URL is undefined');
     }
+    if(!process.env.NATS_CLIENT_ID){
+        throw new Error('NATS_CLIENT_ID is undefined');
+    }
+    if(!process.env.NATS_URL){
+        throw new Error('NATS_URL is undefined');
+    }
+    if(!process.env.NATS_CLUSTER_ID){
+        throw new Error('NATS_CLUSTER_ID is undefined');
+    }
     try{
-        await natsWrapper.connect('ticketing', 'laskjf', 'http://nats-srv:4222');
+        await natsWrapper.connect(
+            process.env.NATS_CLUSTER_ID, 
+            process.env.NATS_CLIENT_ID,
+            process.env.NATS_URL
+        );
 
         natsWrapper.client.on('close',()=>{
             console.log('NATS connection closed!');
