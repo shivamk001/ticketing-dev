@@ -4,10 +4,10 @@ import 'express-async-errors'
 import cookieSession from 'cookie-session';
 import { errorHandler, NotFoundError, currentUser } from '@shivamkesarwani001/ticketing_common';
 
-import { createTicketRouter } from './routes/new';
-import { showTicketROuter } from './routes/show';
-import { indexTicketRouter } from './routes';
-import { updateTicketRouter } from './routes/update';
+import { newOrderRouter } from './routes/new';
+import { showOrderRouter } from './routes/show';
+import { indexOrderRouter } from './routes';
+import { deleteOrderRouter } from './routes/delete';
 
 const app = express();
 // traffic is being proxied to our app through ingress/nginx
@@ -23,10 +23,10 @@ app.all('/uptime', (req, res)=>{
 
 app.use(currentUser);
 
-app.use(createTicketRouter);
-app.use(showTicketROuter);
-app.use(indexTicketRouter);
-app.use(updateTicketRouter);
+app.use(newOrderRouter);
+app.use(showOrderRouter);
+app.use(indexOrderRouter);
+app.use(deleteOrderRouter);
 
 app.all('*', async (req, res, next)=>{
     next(new NotFoundError());
