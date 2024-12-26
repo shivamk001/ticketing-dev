@@ -1,9 +1,22 @@
 import express, { Request, Response } from 'express';
+import { requireAuth, validationRequest } from '@shivamkesarwani001/ticketing_common';
+import mongoose from 'mongoose';
+import { body } from 'express-validator';
 
 const router=express.Router();
 
-router.post('/api/orders', async (req: Request, res: Response)=>{
-    res.send({});
+router.post('/api/orders', 
+            requireAuth,
+            [
+                body('ticketId')
+                .not()
+                .isEmpty()
+                .custom((input: string)=>mongoose.Types.ObjectId.isValid(input))
+                .withMessage('TicketId must be provided')
+            ],
+            validationRequest,
+            async (req: Request, res: Response)=>{
+                res.send({});
 })
 
 export { router as newOrderRouter };
