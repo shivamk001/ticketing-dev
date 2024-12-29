@@ -50,7 +50,7 @@ router.post('/api/orders',
                 // publish an event saying that an order was created
 
 
-                res.send({});
+                res.status(201).send(order);
 })
 
 export { router as newOrderRouter };
