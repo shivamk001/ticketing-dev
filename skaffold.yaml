@@ -28,3 +28,19 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
+      - image: shivamk001/ticket
+        context: ticket
+        docker:
+          dockerfile: Dockerfile
+        sync:
+          manual:
+            - src: '**/*.js'
+              dest: .
+    - image: shivamk001/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
