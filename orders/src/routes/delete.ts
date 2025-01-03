@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
 import { NotAuthorizedError, NotFoundError, OrderStatus, requireAuth, validationRequest } from '@shivamkesarwani001/ticketing_common';
 import { Order } from '../models/order';
+import { OrderCancelledPublisher } from '../events/publishers/order-created-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router=express.Router();
 
@@ -18,6 +20,16 @@ router.delete('/api/orders/:orderId', requireAuth, async (req: Request, res: Res
 
     order.status=OrderStatus.Cancelled;
     await order.save();
+
+    // publish an event saying order was cancelled
+    new OrderCancelledPublisher(natsWrapper.client)
+        .publsh({
+            id: order.id,
+            ticket:{
+                id: order.ticket.id,
+                price: order.ticket.price
+            }
+        })
 
     res.status(204).send(order);
 })
