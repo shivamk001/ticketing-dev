@@ -5,3 +5,4 @@
 todos.txt
 /client/.next
 /**/*/node_modules
+/**/*/dist
