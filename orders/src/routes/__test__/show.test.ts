@@ -46,9 +46,9 @@ it('returns an error if one user tries to fetch another users order', async ()=>
                                 .expect(201);
 
     // make request to fetch the order
-    const { body: fetchedOrder}=await request(app)
-                                        .get(`/api/orders/${order.id}`)
-                                        .set('Cookie', global.signin())
-                                        .send()
-                                        .expect(401);
+    await request(app)
+                .get(`/api/orders/${order.id}`)
+                .set('Cookie', global.signin())
+                .send()
+                .expect(401);
 });
