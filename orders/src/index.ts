@@ -8,7 +8,7 @@ const start = async ()=>{
     if(!process.env.JWT_KEY){
         throw new Error('JWT_KEY is undefined');
     }
-    if(!process.env.MONGO_URI){
+    if(!process.env.MONGO_URL){
         throw new Error('MONGO_URL is undefined');
     }
     if(!process.env.NATS_CLIENT_ID){
@@ -35,7 +35,7 @@ const start = async ()=>{
         process.on('SIGINT', ()=>natsWrapper.client.close());
         process.on('SIGINT', ()=>natsWrapper.client.close());
 
-        await mongoose.connect(process.env.MONGO_URI);
+        await mongoose.connect(process.env.MONGO_URL);
     }
     catch(err){
         console.error(err);

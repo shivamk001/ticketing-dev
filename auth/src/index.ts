@@ -7,11 +7,11 @@ const start = async ()=>{
     if(!process.env.JWT_KEY){
         throw new Error('JWT_KEY is undefined');
     }
-    if(!process.env.MONGO_URI){
-        throw new Error('MONGO_URI is undefined');
+    if(!process.env.MONGO_URL){
+        throw new Error('MONGO_URL is undefined');
     }
     try{
-        await mongoose.connect(process.env.MONGO_URI);
+        await mongoose.connect(process.env.MONGO_URL);
     }
     catch(err){
         console.error(err);
