@@ -19,7 +19,7 @@ app.use(cookieSession({
     domain: process.env.COOKIE_DOMAIN
 }))
 app.all('/uptime', (req, res)=>{
-    res.send('Hello World!')
+    res.send(`Hello World! ${process.env.COOKIE_DOMAIN}`);
 })
 
 app.use(currentUser);
