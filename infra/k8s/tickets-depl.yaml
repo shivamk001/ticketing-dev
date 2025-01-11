@@ -26,8 +26,8 @@ spec:
               value: ticketing
             - name: MONGO_URL
               value: 'mongodb://tickets-mongo-srv:27017/tickets'
-            - name: COOKIE_DOMAIN
-              value: '.trycloudflare.com'
+            # - name: COOKIE_DOMAIN
+              # value: '.trycloudflare.com'
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
