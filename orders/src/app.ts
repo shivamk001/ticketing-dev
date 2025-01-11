@@ -16,10 +16,10 @@ app.use(json());
 app.use(cookieSession({
     signed: false,
     secure: process.env.NODE_ENV!='test',
-    domain: process.env.COOKIE_DOMAIN
+    // domain: process.env.COOKIE_DOMAIN
 }))
 app.all('/uptime', (req, res)=>{
-    res.send(`Hello World! ${process.env.COOKIE_DOMAIN}`);
+    res.send(`Hello World!`);
 })
 
 app.use(currentUser);
