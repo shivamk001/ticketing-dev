@@ -30,14 +30,18 @@ router.post('/api/tickets', requireAuth,
 
         await ticket.save();
 
-        new TicketCreatedPublisher(natsWrapper.client)
-            .publsh({
+        try{
+        await new TicketCreatedPublisher(natsWrapper.client)
+            .publish({
                 id: ticket.id,
                 title: ticket.title,
                 price: ticket.price,
                 userId: ticket.userId
             });
-
+        }
+        catch(err){
+            console.error(`Error in publishing ${err}`);
+        }
         res.status(201).send(ticket);
 })
 
