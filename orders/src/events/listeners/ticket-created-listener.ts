@@ -7,13 +7,14 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent>{
     subject: Subjects.TicketCreated=Subjects.TicketCreated;
     queueGroupName: string=queueGroupName;
     async onMessage(data: TicketCreatedEvent['data'], msg: Message): Promise<void> {
+        console.log('IN ONMESSAGE');
+        
         const {id, title, price}=data;
         const ticket=Ticket.build({
             id, title, price
         });
-
+        console.log('TICKET IN ONMESSAGE', ticket);
         await ticket.save();
-
         msg.ack();
     }
 }
