@@ -4,7 +4,7 @@ client: {
     .fn()
     .mockImplementation(
         (subject: string, data: string, callback: () => void) => {
-        callback();
+            callback();
         }
     ),
 },
