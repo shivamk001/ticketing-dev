@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 
 import {app} from './app';
 import { natsWrapper } from './nats-wrapper';
+import { OrderCreatedListener } from './events/listener/order-created-listener';
+import { OrderCancelledListener } from './events/listener/order-cancelled-listener';
 
 // CONNECT WITH MONGODB
 const start = async ()=>{
@@ -30,7 +32,10 @@ const start = async ()=>{
         natsWrapper.client.on('close',()=>{
             console.log('NATS connection closed!');
             process.exit();;
-        })
+        });
+
+        new OrderCreatedListener(natsWrapper.client).listen();
+        new OrderCancelledListener(natsWrapper.client).listen();
 
         process.on('SIGINT', ()=>natsWrapper.client.close());
         process.on('SIGINT', ()=>natsWrapper.client.close());
