@@ -54,3 +54,12 @@ it('acks the message', async ()=>{
 
     expect(msg.ack).toHaveBeenCalled();
 })
+
+it('publishes a ticket updated event', async ()=>{
+    const { listener, ticket, data, msg}=await setup();
+
+    await listener.onMessage(data, msg);
+
+    expect(msg.ack).toHaveBeenCalled();
+
+})

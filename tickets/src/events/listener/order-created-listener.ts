@@ -1,7 +1,8 @@
-import { Listener, OrderCreatedEvent, OrderStatus, Subjects } from "@shivamkesarwani001/ticketing_common";
+import { Listener, OrderCreatedEvent, OrderStatus, Subjects, TicketUpdatededEvent } from "@shivamkesarwani001/ticketing_common";
 import { queueGroupName } from "./queue-group-name";
 import { Message } from "node-nats-streaming";
 import { Ticket } from "../../models/ticket";
+import { TicketUpdatedPublisher } from "../publisher/ticket-updated-publisher";
 
 export class OrderCreatedListener extends Listener<OrderCreatedEvent>{
     subject: Subjects.OrderCreated=Subjects.OrderCreated;
@@ -21,6 +22,16 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent>{
 
         // save the ticket
         await ticket.save();
+
+        await new TicketUpdatedPublisher(this.client)
+            .publish({
+                id: ticket.id,
+                price: ticket.price,
+                title: ticket.title,
+                userId: ticket.userId,
+                version: ticket.version,
+                orderId: ticket.orderId
+            })
 
         // ack the message
         msg.ack();
