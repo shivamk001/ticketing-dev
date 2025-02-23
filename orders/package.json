@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll --no-cache",
-    "start": "ts-node-dev --poll src/index.ts"
+    "start": "tsc && node dist/index.js"
   },
   "jest": {
     "preset": "ts-jest",
@@ -18,7 +18,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@shivamkesarwani001/ticketing_common": "^1.0.8",
+    "@shivamkesarwani001/ticketing_common": "^1.0.15",
     "@types/cookie-session": "^2.0.49",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
@@ -36,6 +36,7 @@
     "util": "^0.12.5"
   },
   "devDependencies": {
+    "@types/express": "^4.17.21",
     "@types/jest": "^29.5.13",
     "@types/supertest": "^6.0.2",
     "jest": "^29.7.0",

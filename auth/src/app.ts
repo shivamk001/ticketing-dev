@@ -16,10 +16,11 @@ app.set('trust proxy', true);
 app.use(json());
 app.use(cookieSession({
     signed: false,
-    secure: process.env.NODE_ENV!='test'
+    secure: process.env.NODE_ENV!='test',
+    // domain: process.env.COOKIE_DOMAIN
 }))
 app.all('/uptime', (req, res)=>{
-    res.send('Hello World!')
+    res.send(`Hello World!`);
 })
 app.use(currentUserRouter);
 app.use(signInRouter);
