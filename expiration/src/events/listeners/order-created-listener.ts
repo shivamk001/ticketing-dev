@@ -7,6 +7,7 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent>{
     queueGroupName: string=this.queueGroupName;
 
     async onMessage(data: OrderCreatedEvent['data'], msg: Message): Promise<void> {
+        console.log('ORDER CREATED LISTENER');
         await expirationQueue.add({
             orderId: data.id
         });

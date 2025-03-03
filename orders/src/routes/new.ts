@@ -5,7 +5,7 @@ import { body } from 'express-validator';
 import { Ticket } from '../models/ticket';
 import { Order } from '../models/order';
 import { natsWrapper } from '../nats-wrapper';
-import { OrderCreatedPublisher } from '../events/publishers/order-cancelled-publisher';
+import { OrderCreatedPublisher } from '../events/publishers/order-created-publisher';
 
 const router=express.Router();
 
