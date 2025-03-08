@@ -5,11 +5,11 @@ import { body } from 'express-validator';
 import { Ticket } from '../models/ticket';
 import { Order } from '../models/order';
 import { natsWrapper } from '../nats-wrapper';
-import { OrderCreatedPublisher } from '../events/publishers/order-cancelled-publisher';
+import { OrderCreatedPublisher } from '../events/publishers/order-created-publisher';
 
 const router=express.Router();
 
-const EXPIRATION_WINDOW_SECONDS=15*60;
+const EXPIRATION_WINDOW_SECONDS=1*60;
 
 router.post('/api/orders', 
             requireAuth,
@@ -50,7 +50,7 @@ router.post('/api/orders',
                 await order.save();
 
                 // publish an event saying that an order was created
-                new OrderCreatedPublisher(natsWrapper.client)
+                await new OrderCreatedPublisher(natsWrapper.client)
                     .publish({
                         id: order.id,
                         version: order.version,
