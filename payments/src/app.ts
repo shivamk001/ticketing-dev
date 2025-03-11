@@ -3,6 +3,7 @@ import json from 'body-parser';
 import 'express-async-errors'
 import cookieSession from 'cookie-session';
 import { errorHandler, NotFoundError, currentUser } from '@shivamkesarwani001/ticketing_common';
+import { createChargeRouter } from './routes/new';
 
 const app = express();
 // traffic is being proxied to our app through ingress/nginx
@@ -18,6 +19,8 @@ app.all('/uptime', (req, res)=>{
 })
 
 app.use(currentUser);
+
+app.use(createChargeRouter);
 
 app.all('*', async (req, res, next)=>{
     next(new NotFoundError());
