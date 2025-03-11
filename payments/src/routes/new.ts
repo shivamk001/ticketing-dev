@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { requireAuth, validationRequest, BadRequestError, NotFoundError  } from "@shivamkesarwani001/ticketing_common";
+import { requireAuth, validationRequest, BadRequestError, NotFoundError, NotAuthorizedError, OrderStatus  } from "@shivamkesarwani001/ticketing_common";
 import { Order } from "../models/order";
 import { body } from "express-validator";
 
@@ -17,6 +17,22 @@ router.post('/api/payments',
         ],
         validationRequest,
         async (req: Request, res: Response)=>{
+            const {token, orderId}=req.body;
+
+            const order=await Order.findById(orderId);
+
+            if(!order){
+                throw new NotFoundError();
+            }
+
+            if(order.userId !== req.currentUser!.id){
+                throw new NotAuthorizedError();
+            }
+
+            if(order.status===OrderStatus.Cancelled){
+                throw new BadRequestError('Cannot pay for cancelled order');
+            }
+
             res.send({success: true});
         }
 );
