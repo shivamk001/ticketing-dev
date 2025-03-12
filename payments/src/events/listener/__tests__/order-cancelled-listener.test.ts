@@ -15,8 +15,7 @@ const setup=async ()=>{
         price: 10,
         userId: 'userId'
     })
-    console.log('order:', order);
-    
+    await order.save();
 
     const data: OrderCancelledEvent['data']={
         id: order.id,
@@ -35,15 +34,15 @@ const setup=async ()=>{
     return { listener, data, msg, order};
 }
 
-it('updates the status of the order', async ()=>{
-    const {listener, data, msg}=await setup();
+it('updates the status of the order', async () => {
+    const { listener, data, msg, order } = await setup();
 
     await listener.onMessage(data, msg);
 
-    const updatedOder=await Order.findById(data.id);
+    const updatedOrder = await Order.findById(order.id);
 
-    expect(updatedOder!.status).toEqual(OrderStatus.Cancelled);
-})
+    expect(updatedOrder!.status).toEqual(OrderStatus.Cancelled);
+});
 
 it('acks the message', async ()=>{
     const {listener, data, msg}=await setup();
