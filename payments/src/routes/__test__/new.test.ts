@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { Order } from "../../models/order";
 import { OrderStatus } from "@shivamkesarwani001/ticketing_common";
 import { stripe } from "../../stripe";
+import { Payment } from "../../models/payment";
 
 // jest.mock('../../stripe');
 
@@ -126,4 +127,11 @@ it('REAL STRIPE API: returns a 201 with valid input', async ()=>{
     
     expect(stripeCharge).toBeDefined();
     expect(stripeCharge!.currency).toEqual('usd');
+
+    const payment=await Payment.findOne({
+        orderId: order.id,
+        stripeId: stripeCharge!.id
+    });
+
+    expect(payment).not.toBeNull();
 });
