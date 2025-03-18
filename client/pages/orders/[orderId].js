@@ -15,7 +15,12 @@ const OrderShow=({order})=>{
         return ()=>{
             clearInterval(timerId);
         }
-    }, [orderId]);
+    }, [order]);
+
+    if(timeLeft<0){
+        return <div>Order Expired</div>
+    }
+
     return (<div>Time Left To Pay: {timeLeft}</div>);
 }
 
