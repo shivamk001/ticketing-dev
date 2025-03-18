@@ -1,9 +1,11 @@
+import Router from 'next/router';
+
 const TicketShow=({ticket})=>{
     const { doRequest, errors}=useRequest({
         url: '/api/orders',
         method: 'POST',
         body: {ticketId: ticket.id},
-        onSuccess: (order)=>console.log(order)
+        onSuccess: (order)=>Router.push('/orders/[orderId]', `/order/${order.id}`)
     });
     return (<div>
         <h1>{ticket.title}</h1>
