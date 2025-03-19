@@ -2,10 +2,9 @@ import mongoose from 'mongoose';
 
 import {app} from './app';
 import { natsWrapper } from './nats-wrapper';
-import { TicketCreatedListener } from './events/listeners/ticket-created-listener';
-import { TicketUpdatedListener } from './events/listeners/ticket-updated-listener';
-import { ExpirationCompleteListener } from './events/listeners/expiration-complete-listener';
-import { PaymentCreatedListener } from './events/listeners/payment-created-listener';
+
+import { OrderCancelledListener } from './events/listener/order-cancelled-listener';
+import { OrderCreatedListener } from './events/listener/order-created-listener';
 
 // CONNECT WITH MONGODB
 const start = async ()=>{
@@ -34,17 +33,15 @@ const start = async ()=>{
         natsWrapper.client.on('close',()=>{
             console.log('NATS connection closed!');
             process.exit();;
-        })
+        });
+
+        new OrderCreatedListener(natsWrapper.client).listen();
+        new OrderCancelledListener(natsWrapper.client).listen();
 
         process.on('SIGINT', ()=>natsWrapper.client.close());
         process.on('SIGINT', ()=>natsWrapper.client.close());
 
         await mongoose.connect(process.env.MONGO_URL);
-
-        new TicketCreatedListener(natsWrapper.client).listen();
-        new TicketUpdatedListener(natsWrapper.client).listen();
-        new ExpirationCompleteListener(natsWrapper.client).listen();
-        new PaymentCreatedListener(natsWrapper.client).listen();
     }
     catch(err){
         console.error(err);

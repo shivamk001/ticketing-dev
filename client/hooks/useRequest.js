@@ -4,14 +4,14 @@ import { useState } from "react";
 const useRequest = ({url, method, body, onSuccess})=>{
     const [errors, setErrors]=useState(null);
 
-    const doRequest=async ()=>{
+    const doRequest=async (props={})=>{
         try{
             setErrors(null);
             let response;
             if(method=='POST')
-                response=await axios.post(url, body);
+                response=await axios.post(url, {...body, ...props});
             else
-                response=await axios.get(url, body);
+                response=await axios.get(url, {...body, ...props});
 
             if(onSuccess)   onSuccess(response.data);
             return response.data;
