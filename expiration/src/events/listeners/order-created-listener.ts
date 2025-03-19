@@ -10,7 +10,7 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent>{
 
         const delay=new Date(data.expiresAt).getTime()-new Date().getTime();
 
-        console.log('ORDER CREATED LISTENER');
+        console.log('ORDER CREATED LISTENER', delay, new Date().toDateString());
         await expirationQueue.add({
             orderId: data.id
         },{

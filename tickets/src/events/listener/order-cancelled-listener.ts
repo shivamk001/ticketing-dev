@@ -10,7 +10,7 @@ export class OrderCancelledListener extends Listener<OrderCancelledEvent>{
 
     async onMessage(data: OrderCancelledEvent['data'], msg: Message): Promise<void> {
         const ticket=await Ticket.findById(data.ticket.id);
-
+        console.log('In OrderCancelled Publisher1:', ticket);
         if(!ticket){
             throw new Error('Ticket not found');
         }
@@ -19,6 +19,7 @@ export class OrderCancelledListener extends Listener<OrderCancelledEvent>{
 
         await ticket.save();
 
+        console.log('In OrderCancelled Publisher2:', ticket);
         await new TicketUpdatedPublisher(this.client)
         .publish({
             id: ticket.id,
