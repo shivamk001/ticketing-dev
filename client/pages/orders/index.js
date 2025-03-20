@@ -13,3 +13,6 @@ OrderIndex.getInitialProps=async (context, client)=>{
 
     return { orders: data};
 }
+
+export default OrderIndex;
+
