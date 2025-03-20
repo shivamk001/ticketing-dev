@@ -7,9 +7,9 @@ const landingPage=({ currentUser, tickets })=>{
                 <td>{ticket.title}</td>
                 <td>{ticket.price}</td>
                 <td>
-                    <Link href="/tickets/[ticketId" as={`/tickets/${ticket.id}`} legacyBehavior>
-                        <a>View</a>
-                    </Link>
+                <Link href="/tickets/[ticketId]" as={`/tickets/${ticket.id}`}>
+                    View
+                </Link>
                 </td>
             </tr>
         )

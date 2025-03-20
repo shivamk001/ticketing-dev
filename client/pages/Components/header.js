@@ -11,16 +11,14 @@ const Header=({currentUser})=>{
     .filter(linkConfig=> linkConfig)
     .map(({label, href})=>{
         return (<li key={href} className='nav-item'>
-            <Link href={href} legacyBehavior>
-                <a className='nav-link'>
-                    {label}
-                </a>
+            <Link className="nav-link" href={href}>
+                {label}
             </Link>
         </li>)
     })
     return (<nav className='navbar navbar-light bg-light'>
-        <Link href='/' legacyBehavior>
-            <a className='navbar-brand'>GitTik</a>
+        <Link className="navbar-brand" href="/">
+            GitTix
         </Link>
 
         <div className='d-flex justify-content-end'>
