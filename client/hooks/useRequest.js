@@ -14,6 +14,7 @@ const useRequest = ({url, method, body, onSuccess})=>{
                 response=await axios.get(url, {...body, ...props});
 
             if(onSuccess)   onSuccess(response.data);
+            console.log('DOREQUEST:', response.data);
             return response.data;
         }
         catch(err){

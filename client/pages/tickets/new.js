@@ -17,6 +17,8 @@ const NewTicket=()=>{
 
     const onSubmit=async (event)=>{
         event.preventDefault();
+        console.log('NEWTICKET TITLE PRICE:', title, price);
+        
         await doRequest();
     }
 
