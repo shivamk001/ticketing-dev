@@ -10,7 +10,8 @@ const NewTicket=()=>{
         url: '/api/tickets',
         method: 'post',
         body: {title, price},
-        onSuccess: ticket=>console.log(ticket)
+        // onSuccess: ticket=>console.log(ticket)
+        onSuccess: () => Router.push('/')
     });
 
     const onSubmit=async (event)=>{
