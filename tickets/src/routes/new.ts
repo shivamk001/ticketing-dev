@@ -30,6 +30,8 @@ router.post('/api/tickets', requireAuth,
 
         await ticket.save();
 
+        console.log('New Ticket:', ticket);
+
         let publishData: TicketCreatedEvent['data']={
             id: ticket.id,
             title: ticket.title,
