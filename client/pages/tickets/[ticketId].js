@@ -1,4 +1,5 @@
 import Router from 'next/router';
+import useRequest from '../../hooks/useRequest';
 
 const TicketShow=({ticket})=>{
     const { doRequest, errors}=useRequest({
