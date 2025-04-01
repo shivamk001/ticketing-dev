@@ -4,15 +4,16 @@ import useRequest from '../../hooks/useRequest';
 import { Router } from 'next/router';
 
 const OrderShow=({order, currentUser })=>{
-    const [timeLeft, setTimeLeft]=useState('');
+    const [timeLeft, setTimeLeft]=useState(0);
     const { doRequest, errors}=useRequest({
         url: '/api/payments',
         method: 'post',
         body: {orderId: order.id},
-        onSuccess: ()=>Router.push  ('/orders')
+        onSuccess: ()=>Router.push('/orders')
         
     })
-
+    console.log('ORDER:', order);
+    
     useEffect(()=>{
         const findTimeLeft=()=>{
             const msLeft=new Date(order.expiresAt)-new Date();
@@ -37,7 +38,7 @@ const OrderShow=({order, currentUser })=>{
             Time Left To Pay: {timeLeft} seconds
             <StripeCheckout
                 token={(token)=>console.log(token)}
-                stripeKey=''
+                stripeKey='pk_test_51R1sEPQhtnniCyXlopKdmCdIjBOAF48mJSy2wD12JTM24tSrq8yv1yFkAPUfESpxHos575hEIbArVYsxIxF5pxkt00gM0EmaC0'
                 amount={order.ticket.price*1000}
                 email={currentUser.email}
             />
@@ -47,7 +48,7 @@ const OrderShow=({order, currentUser })=>{
 
 OrderShow.getInitialProps=async (context, client)=>{
     const {orderId}=context.query;
-
+    console.log('ORDERID:', orderId);
     const {data}=await client.get(`/api/orders/${orderId}`);
 
     return { order: data};
