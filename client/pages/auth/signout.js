@@ -5,7 +5,7 @@ import Router from "next/router";
 const SignOut=()=>{
     const { doRequest}=useRequest({
         url: '/auth/users/signout',
-        method: 'post',
+        method: 'POST',
         body: {},
         onSuccess: ()=>Router.push('/')
     })

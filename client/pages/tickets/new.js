@@ -9,7 +9,7 @@ const NewTicket=()=>{
 
     const { doRequest, errors}=useRequest({
         url: '/api/tickets',
-        method: 'post',
+        method: 'POST',
         body: {title, price},
         // onSuccess: ticket=>console.log(ticket)
         onSuccess: () => Router.push('/')

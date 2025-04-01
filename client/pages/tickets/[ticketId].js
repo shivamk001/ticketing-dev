@@ -6,7 +6,8 @@ const TicketShow=({ticket})=>{
         url: '/api/orders',
         method: 'POST',
         body: {ticketId: ticket.id},
-        onSuccess: (order)=>Router.push('/orders/[orderId]', `/order/${order.id}`)
+        onSuccess: (order)=>Router.push('/orders/[orderId]', `/orders/${order.id}`)
+        // onSuccess: (order)=>console.log(order)
     });
     return (<div>
         <h1>{ticket.title}</h1>
