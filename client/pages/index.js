@@ -1,7 +1,9 @@
+import axios from 'axios';
 import Link from 'next/link';
 
 const landingPage=({ currentUser, tickets })=>{
-    const ticketsList=tickets.map(ticket=>{
+
+    const ticketsList=tickets.length>0?tickets.map(ticket=>{
         return (
             <tr key={ticket.id}>
                 <td>{ticket.title}</td>
@@ -13,7 +15,13 @@ const landingPage=({ currentUser, tickets })=>{
                 </td>
             </tr>
         )
-    });
+    }):[(
+        <tr key='1'>
+            <td>title</td>
+            <td>1</td>
+            <td>View</td>
+        </tr>
+    )];
 
     return (<div>
         <h1>Tickets</h1>
@@ -33,9 +41,20 @@ const landingPage=({ currentUser, tickets })=>{
 }
 
 landingPage.getInitialProps=async (context, client, currentUser)=>{
-    const { data }=await client.get('/api/tickets');
+    // const { data }=await client.get('/api/tickets');
+    const baseURL=typeof window=='undefined'?process.env.TICKET_SERVICE_URL:'';
+    console.log('INDEXJS BASEURL:', baseURL);
+    
+    try{
+        const { data }=await axios.get(`${baseURL}/api/tickets`);
+        console.log('INDEXJS DATA:', data);
+        return {tickets: data};
+    }
+    catch(err){
+        console.error('Error when fetching tickets:', err);
+        return {tickets: []};
+    }
 
-    return { tickets: data};
 }
 
 export default landingPage;

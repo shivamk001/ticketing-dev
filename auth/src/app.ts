@@ -19,13 +19,14 @@ app.use(cookieSession({
     secure: process.env.NODE_ENV!='test',
     // domain: process.env.COOKIE_DOMAIN
 }))
-app.all('/uptime', (req, res)=>{
-    res.send(`Hello World!`);
-})
+
 app.use(currentUserRouter);
 app.use(signInRouter);
 app.use(signOutRouter);
 app.use(signUpRouter);
+app.all('/api/tickets/uptime', (req, res)=>{
+    res.send(`Hello World!`);
+})
 app.all('*', async (req, res, next)=>{
     next(new NotFoundError());
 })

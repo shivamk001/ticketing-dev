@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import useRequest from '../../hooks/useRequest';
 import { Router } from 'next/router';
+import axios from 'axios';
 
 const OrderShow=({order, currentUser })=>{
     const [timeLeft, setTimeLeft]=useState(0);
@@ -49,9 +50,21 @@ const OrderShow=({order, currentUser })=>{
 OrderShow.getInitialProps=async (context, client)=>{
     const {orderId}=context.query;
     console.log('ORDERID:', orderId);
-    const {data}=await client.get(`/api/orders/${orderId}`);
+    // const {data}=await client.get(`/api/orders/${orderId}`);
+    const baseURL=typeof window=='undefined'?process.env.ORDER_SERVICE_URL:'';
+    console.log('ORDERID BASEURL:', baseURL);
+    
 
-    return { order: data};
+    try{
+        let {data}=await axios.get(`${baseURL}/api/orders/${orderId}`);
+        console.log('ORDERID DATA:', data);
+        
+        return { order: data};
+    }
+    catch(err){
+        console.error('Error when fetching order:', err);
+        return { order: {}};
+    }
 }
 
 export default OrderShow;

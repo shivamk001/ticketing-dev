@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const OrderIndex=({orders})=>{
     return <ul>
         {orders.map(order=>{
@@ -9,9 +11,19 @@ const OrderIndex=({orders})=>{
 }
 
 OrderIndex.getInitialProps=async (context, client)=>{
-    const { data }=await client.get('/api/orders');
+    // const { data }=await client.get('/api/orders');
+    const baseURL=typeof window=='undefined'?process.env.ORDER_SERVICE_URL:'';
+    console.log('ORDERS INDEX BASEURL:', baseURL);
 
-    return { orders: data};
+    try{
+        let {data}=await axios.get(`${baseURL}/api/orders`);
+        console.log('ORDER INDEX DATA:', data);
+        return { orders: data};
+    }
+    catch(err){
+        console.error('Error when fetching orders:', err);
+        return { orders: []};
+    }
 }
 
 export default OrderIndex;

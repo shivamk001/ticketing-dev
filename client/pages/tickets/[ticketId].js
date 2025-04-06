@@ -1,5 +1,6 @@
 import Router from 'next/router';
 import useRequest from '../../hooks/useRequest';
+import axios from 'axios';
 
 const TicketShow=({ticket})=>{
     const { doRequest, errors}=useRequest({
@@ -21,8 +22,19 @@ const TicketShow=({ticket})=>{
 
 TicketShow.getInitialProps=async (context, client)=>{
     const {ticketId}=context.query;
-    const {data}=await client.get(`/api/tickets/${ticketId}`);
-    return {ticket: data};
+    // const {data}=await client.get(`/api/tickets/${ticketId}`);
+    const baseURL=typeof window=='undefined'?process.env.TICKET_SERVICE_URL:'';
+    console.log('TICKETID BASEURL:', baseURL);
+
+    try{
+        let {data}=await axios.get(`${baseURL}/api/tickets/${ticketId}`);
+        console.log('TICKETID DATA:', data);
+        return {ticket: data};
+    }
+    catch(err){
+        console.error('Error when fetching ticket:', err);
+        return { ticket: {}};
+    }
 }
 
 export default TicketShow;
