@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Link from 'next/link';
 
 const landingPage=({ currentUser, tickets })=>{
@@ -33,9 +34,18 @@ const landingPage=({ currentUser, tickets })=>{
 }
 
 landingPage.getInitialProps=async (context, client, currentUser)=>{
-    const { data }=await client.get('/api/tickets');
+    // const { data }=await client.get('/api/tickets');
+    const baseURL=typeof window=='undefined'?process.env.TICKET_SERVICE_URL:'';
+    
+    try{
+        const { data }=await axios.get(`${baseURL}/api/tickets`);
+        return {tickets: data};
+    }
+    catch(err){
+        console.error('Error when fetching tickets:', err);
+        return {tickets: []};
+    }
 
-    return { tickets: data};
 }
 
 export default landingPage;

@@ -15,6 +15,13 @@ spec:
       containers:
         - name: client
           image: shivamk001/client
+          env:
+            - name: USER_SERVICE_URL
+              value: "http://auth-srv:3000"
+            - name: TICKET_SERVICE_URL
+              value: http://tickets-srv:3000"
+            - name: ORDER_SERVICE_URL
+              value: http://orders-srv:3000"
 ---
 
 apiVersion: v1

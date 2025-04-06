@@ -21,8 +21,17 @@ const TicketShow=({ticket})=>{
 
 TicketShow.getInitialProps=async (context, client)=>{
     const {ticketId}=context.query;
-    const {data}=await client.get(`/api/tickets/${ticketId}`);
-    return {ticket: data};
+    // const {data}=await client.get(`/api/tickets/${ticketId}`);
+    const baseURL=typeof window=='undefined'?process.env.TICKET_SERVICE_URL:'';
+
+    try{
+        let {data}=axios.get(`${baseURL}/api/tickets/${ticketId}`);
+        return {ticket: data};
+    }
+    catch(err){
+        console.error('Error when fetching ticket:', err);
+        return { ticket: {}};
+    }
 }
 
 export default TicketShow;

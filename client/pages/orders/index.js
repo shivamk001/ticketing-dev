@@ -9,9 +9,17 @@ const OrderIndex=({orders})=>{
 }
 
 OrderIndex.getInitialProps=async (context, client)=>{
-    const { data }=await client.get('/api/orders');
+    // const { data }=await client.get('/api/orders');
+    const baseURL=typeof window=='undefined'?process.env.ORDER_SERVICE_URL:'';
 
-    return { orders: data};
+    try{
+        let {data}=axios.get(`${baseURL}/api/orders`);
+        return { orders: data};
+    }
+    catch(err){
+        console.error('Error when fetching orders:', err);
+        return { orders: []};
+    }
 }
 
 export default OrderIndex;
