@@ -52,9 +52,13 @@ OrderShow.getInitialProps=async (context, client)=>{
     console.log('ORDERID:', orderId);
     // const {data}=await client.get(`/api/orders/${orderId}`);
     const baseURL=typeof window=='undefined'?process.env.ORDER_SERVICE_URL:'';
+    console.log('ORDERID BASEURL:', baseURL);
+    
 
     try{
         let {data}=axios.get(`${baseURL}/api/orders/${orderId}`);
+        console.log('ORDERID DATA:', data);
+        
         return { order: data};
     }
     catch(err){

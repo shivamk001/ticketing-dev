@@ -18,10 +18,11 @@ AppComponent.getInitialProps=async appContext=>{
     const client=buildClient(appContext.ctx);
     // const { data }=await client.get('/auth/users/currentuser');
     const baseURL=typeof window=='undefined'?process.env.AUTH_SERVICE_URL:'';
+    console.log('_APP BASEURL:', baseURL);
 
     try{
         const { data }=await axios.get(`${baseURL}/auth/users/currentuser`);
-
+        console.log('_APP  DATA:', data);
         let pageProps={};
         if(appContext.Component.getInitialProps){
             pageProps=await appContext.Component.getInitialProps(appContext.ctx, client, data.currentUser);

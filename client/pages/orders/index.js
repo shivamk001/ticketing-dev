@@ -11,9 +11,11 @@ const OrderIndex=({orders})=>{
 OrderIndex.getInitialProps=async (context, client)=>{
     // const { data }=await client.get('/api/orders');
     const baseURL=typeof window=='undefined'?process.env.ORDER_SERVICE_URL:'';
+    console.log('ORDERS INDEX BASEURL:', baseURL);
 
     try{
         let {data}=axios.get(`${baseURL}/api/orders`);
+        console.log('ORDER INDEX DATA:', data);
         return { orders: data};
     }
     catch(err){
