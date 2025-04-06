@@ -56,7 +56,7 @@ OrderShow.getInitialProps=async (context, client)=>{
     
 
     try{
-        let {data}=axios.get(`${baseURL}/api/orders/${orderId}`);
+        let {data}=await axios.get(`${baseURL}/api/orders/${orderId}`);
         console.log('ORDERID DATA:', data);
         
         return { order: data};

@@ -26,7 +26,7 @@ TicketShow.getInitialProps=async (context, client)=>{
     console.log('TICKETID BASEURL:', baseURL);
 
     try{
-        let {data}=axios.get(`${baseURL}/api/tickets/${ticketId}`);
+        let {data}=await axios.get(`${baseURL}/api/tickets/${ticketId}`);
         console.log('TICKETID DATA:', data);
         return {ticket: data};
     }
