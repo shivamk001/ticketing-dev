@@ -2,7 +2,7 @@ import axios from 'axios';
 import Link from 'next/link';
 
 const landingPage=({ currentUser, tickets })=>{
-
+    
     const ticketsList=tickets.length>0?tickets.map(ticket=>{
         return (
             <tr key={ticket.id}>
@@ -15,13 +15,7 @@ const landingPage=({ currentUser, tickets })=>{
                 </td>
             </tr>
         )
-    }):[(
-        <tr key='1'>
-            <td>title</td>
-            <td>1</td>
-            <td>View</td>
-        </tr>
-    )];
+    }):[];
 
     return (<div>
         <h1>Tickets</h1>
