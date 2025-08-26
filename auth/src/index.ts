@@ -4,6 +4,7 @@ import {app} from './app';
 
 // CONNECT WITH MONGODB
 const start = async ()=>{
+    console.log('STARTING SERVER');
     if(!process.env.JWT_KEY){
         throw new Error('JWT_KEY is undefined');
     }
